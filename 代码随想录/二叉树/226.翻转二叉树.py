@@ -35,12 +35,46 @@ class TreeNode:
         return build(0)
 
 
+def invert(root: TreeNode):
+    if not root:
+        return None
+    root.left, root.right = root.right, root.left
+    invert(root.left)
+    invert(root.right)
+    return root
+
+
+def inv1(root: TreeNode):
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node:
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+            stack.append(node)
+            stack.append(None)
+        else:
+            node = stack.pop()
+            node.left, node.right = node.right, node.left
+
+
+def inv2(root: TreeNode):
+    stack = [root]
+    while stack:
+        for i in range(len(stack)):
+            node = stack.pop()
+            if node.left:
+                stack.append(node.left)
+            if node.right:
+                stack.append(node.right)
+            node.left, node.right = node.right, node.left
+
+
 if __name__ == '__main__':
-    r = TreeNode.apply([3, 9, 20, None, None, 15, 7])
+    # r = TreeNode.apply([3, 9, 20, None, None, 15, 7])
+    r = TreeNode.apply([4, 2, 7, 1, 3, 6, 9])
+    inv2(r)
     print(r)
-
-
-
-
-
 
