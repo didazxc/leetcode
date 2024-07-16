@@ -30,13 +30,40 @@ class TreeNode:
         def build(i):
             left = build(2*i+1) if 2*i+1 < n else None
             right = build(2*i+2) if 2*i+2 < n else None
-            return TreeNode(nums[i], left=left, right=right) if nums[i] is not None else None
+            return TreeNode(nums[i], left=left, right=right) if nums[i] else None
 
         return build(0)
 
 
+def insert0(root: TreeNode, a):
+    pre = None
+    cur = root
+    while cur:
+        if cur.val > a:
+            pre = cur
+            cur = cur.left
+        elif cur.val < a:
+            pre = cur
+            cur = cur.right
+    else:
+        if pre.val > a:
+            pre.left = TreeNode(a)
+        else:
+            pre.right = TreeNode(a)
+    return root
+
+
+def insert(root: TreeNode, a):
+    if root is None:
+        return TreeNode(a)
+    if root.val > a:
+        root.left = insert(root.left, a)
+    elif root.val < a:
+        root.right = insert(root.right, a)
+    return root
+
+
 if __name__ == '__main__':
-    r = TreeNode.apply([3,9,20,None,None,15,7])
+    r = TreeNode.apply([4,2,7,1,3])
     print(r)
-    r = TreeNode.apply([1,2,2,3,3,None,None,4,4])
-    print(r)
+    print(insert(r, 5))

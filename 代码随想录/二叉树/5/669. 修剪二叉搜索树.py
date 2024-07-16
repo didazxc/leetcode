@@ -35,8 +35,43 @@ class TreeNode:
         return build(0)
 
 
+def trim(root: TreeNode, low, high):
+    if root is None:
+        return None
+    if root.val < low:
+        return trim(root.right, low, high)
+    if root.val > high:
+        return trim(root.left, low, high)
+    root.left = trim(root.left, low, high)
+    root.right = trim(root.right, low, high)
+    return root
+
+
+def trim0(root: TreeNode, low, high):
+    new_root = root
+    while new_root and not(low <= new_root.val <= high):
+        if low > new_root.val:
+            new_root = new_root.right
+        elif high < new_root.val:
+            new_root = new_root.left
+    if new_root is None:
+        return None
+    cur = new_root
+    while cur.left:
+        if cur.left.val >= low:
+            cur = cur.left
+        else:
+            cur.left = cur.left.right
+    cur = new_root
+    while cur.right:
+        if cur.right.val <= high:
+            cur = cur.right
+        else:
+            cur.right = cur.right.left
+    return new_root
+
+
 if __name__ == '__main__':
-    r = TreeNode.apply([3,9,20,None,None,15,7])
+    r = TreeNode.apply([3,0,4,None,2,None,None,None, None, 1])
     print(r)
-    r = TreeNode.apply([1,2,2,3,3,None,None,4,4])
-    print(r)
+    print(trim0(r,1,3))

@@ -30,13 +30,22 @@ class TreeNode:
         def build(i):
             left = build(2*i+1) if 2*i+1 < n else None
             right = build(2*i+2) if 2*i+2 < n else None
-            return TreeNode(nums[i], left=left, right=right) if nums[i] is not None else None
+            return TreeNode(nums[i], left=left, right=right) if nums[i] else None
 
         return build(0)
 
 
+def find(root: TreeNode, a, b):
+    cur = root
+    while cur and (cur.val > a and cur.val > b):
+        cur = cur.left
+    while cur and (cur.val < a and cur.val < b):
+        cur = cur.right
+    return cur
+
+
 if __name__ == '__main__':
-    r = TreeNode.apply([3,9,20,None,None,15,7])
+    r = TreeNode.apply([6,2,8,0,4,7,9,None,None,3,5])
     print(r)
-    r = TreeNode.apply([1,2,2,3,3,None,None,4,4])
-    print(r)
+    print(find(r,2,4))
+

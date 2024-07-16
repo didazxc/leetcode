@@ -35,8 +35,38 @@ class TreeNode:
         return build(0)
 
 
+def build(nums):
+    if len(nums) == 0:
+        return None
+    root_idx = len(nums)//2
+    left = build(nums[:root_idx])
+    right = build(nums[root_idx+1:])
+    return TreeNode(val=nums[root_idx], left=left, right=right)
+
+
+def build0(nums):
+    if len(nums) == 0:
+        return None
+    stack = [(0, len(nums), None, 'root')]
+    root = None
+    while stack:
+        start, end, parent_node, mode = stack.pop()
+        mid = (end - start) // 2 + start
+        node = TreeNode(nums[mid])
+        if parent_node is None:
+            root = node
+        else:
+            if mode == 'left':
+                parent_node.left = node
+            elif mode == 'right':
+                parent_node.right = node
+        if mid+1 < end:
+            stack.append((mid+1, end, node, 'right'))
+        if mid > start:
+            stack.append((start, mid, node, 'left'))
+    return root
+
+
 if __name__ == '__main__':
-    r = TreeNode.apply([3,9,20,None,None,15,7])
-    print(r)
-    r = TreeNode.apply([1,2,2,3,3,None,None,4,4])
+    r = build0([-10, -3, 0, 5, 9])
     print(r)

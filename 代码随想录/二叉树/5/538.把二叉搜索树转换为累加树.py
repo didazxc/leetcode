@@ -35,8 +35,55 @@ class TreeNode:
         return build(0)
 
 
+def cum0(root: TreeNode):
+    obj = {'num': 0}
+
+    def fn(node: TreeNode):
+        if node:
+            fn(node.right)
+            obj['num'] += node.val
+            node.val = obj['num']
+            fn(node.left)
+    fn(root)
+    return root
+
+
+def cum1(root: TreeNode):
+    num = 0
+    stack = []
+    cur = root
+    while cur or stack:
+        if cur:
+            stack.append(cur)
+            cur = cur.right
+        else:
+            node = stack.pop()
+            num += node.val
+            node.val = num
+            cur = node.left
+    return root
+
+
+def cum(root: TreeNode):
+    num = 0
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node:
+            if node.left:
+                stack.append(node.left)
+            stack.append(node)
+            stack.append(None)
+            if node.right:
+                stack.append(node.right)
+        else:
+            node = stack.pop()
+            num += node.val
+            node.val = num
+    return root
+
+
 if __name__ == '__main__':
-    r = TreeNode.apply([3,9,20,None,None,15,7])
+    r = TreeNode.apply([4,1,6,0,2,5,7,None,None,None,3,None,None,None,8])
     print(r)
-    r = TreeNode.apply([1,2,2,3,3,None,None,4,4])
-    print(r)
+    print(cum(r))
