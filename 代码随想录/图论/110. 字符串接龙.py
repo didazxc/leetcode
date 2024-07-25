@@ -43,3 +43,59 @@ yhn
 
 2 <= N <= 500
 """
+
+
+def bfs(graph):
+    n = len(graph)
+    stack = [0]
+    res = 1
+    seen = set()
+    while stack:
+        res += 1
+        for _ in range(len(stack)):
+            i = stack.pop()
+            seen.add(i)
+            for j in range(n):
+                if graph[i][j] and j not in seen:
+                    if j == n-1:
+                        return res
+                    stack.append(j)
+    return res
+
+
+def diff_one(a, b):
+    cnt = 0
+    for i in range(len(a)):
+        if a[i] != b[i]:
+            cnt += 1
+            if cnt > 1:
+                return False
+    return cnt == 1
+
+
+def ladder(n, start, end, strs):
+    graph = [[False] * (n+2) for _ in range(n+2)]
+    li = [start] + strs + [end]
+    for i in range(n+1):
+        for j in range(1, n+2):
+            graph[i][j] = diff_one(li[i], li[j])
+    return bfs(graph)
+
+
+if __name__ == '__main__':
+    inputs = """
+6
+abc def
+efc
+dbc
+ebc
+dec
+dfc
+yhn
+    """
+    arr = inputs.strip().split('\n')
+    n = int(arr[0])
+    start, end = arr[1].split()
+    strs = arr[2:]
+    print(ladder(n, start, end, strs))
+
