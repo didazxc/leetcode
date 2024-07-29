@@ -18,3 +18,14 @@ https://cloud.tencent.com/developer/article/2008166
 6. 快速排序
 ![](https://ask.qcloudimg.com/http-save/6801492/1a26261791eadaa25931bdd567234296.gif)
 
+7. 归并排序
+![](https://ask.qcloudimg.com/http-save/6801492/0dd48c4b409c55984e0578e11c6b8f6f.gif)
+
+8. 计数排序
+![](https://ask.qcloudimg.com/http-save/6801492/e51c793baa3c3062bf81f4a5f01be877.gif)
+
+9. 基数排序
+![](https://ask.qcloudimg.com/http-save/6801492/05262cafdb46dc547747c77b3c8a5b4c.gif)
+
+10. 桶排序
+![](https://ask.qcloudimg.com/http-save/6801492/5e5dcb39cf5580e6872653cf948b1456.gif)
