@@ -19,13 +19,18 @@ def re_hosts(ip_addresses, host_name):
     os.system('ipconfig/flushdns')
 
 
-def get_ips(host_name):
+def get_ips(host_name, timeout=5):
     driver = webdriver.Chrome('C:\MyProgram\chromedriver-win64\chromedriver.exe')
     driver.get(f'https://ping.chinaz.com/{host_name}')
-    com = driver.find_element_by_id("gjd")
-    tar = com.find_element_by_xpath('../label')
-    while not com.text or not tar.text or int(com.text) < int(tar.text):
+    completed = driver.find_element_by_id("gjd")
+    total = completed.find_element_by_xpath('../label')
+    wait_time = 0
+    while not completed.text or not total.text or int(completed.text) < int(total.text):
         time.sleep(0.5)
+        wait_time += 0.5
+        if wait_time > timeout:
+            print(f'timeout={timeout}s, get {int(completed.text)}/{int(total.text)} responses')
+            break
     elements = driver.find_element_by_id("ipliststr").find_elements_by_tag_name("a")
     res = [ele.text for ele in elements]
     driver.quit()
